@@ -22,7 +22,7 @@ YOUR CODE BEGINS BELOW HERE. FILL IN THE MISSING OPERATIONS / CODE
 
 
 # this is the final result. Modify this line, and the empty lines above, to solve the assignment
-middle_average = None
+middle_average = sum(even_list[len(even_list)//2-1:len(even_list)//2+1]) / 2 #modify this line to perform the correct operation
 
 # the average of middle elements is
 print("The average is: ", middle_average)
