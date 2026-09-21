@@ -29,3 +29,8 @@ num_evens = 0
 num_odds = 0
 
 ### YOUR CODE BEGINS HERE ###
+num_evens = len([num for num in nums if num % 2 == 0])
+num_odds = len([num for num in nums if num % 2 != 0])
+
+print("The number of even numbers is: ", num_evens)
+print("The number of odd numbers is: ", num_odds)
