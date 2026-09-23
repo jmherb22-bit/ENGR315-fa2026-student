@@ -19,10 +19,10 @@ def dot_product(a,b):
     """
 
     ### YOUR CODE HERE ###
-
+    dot_product = np.dot(a,b)
 
     ### CHANGE THIS RETURN VALUE. IT IS HERE SO THE CODE DOES NOT ERROR
-    return None
+    return dot_product
 
 """
 Step 1: Generate two "vectors" of equal length but full of random values
