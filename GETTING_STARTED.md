@@ -177,7 +177,7 @@ A virtual environment keeps this course's packages separate from other Python pr
 ### Create and Activate the Virtual Environment
 
 1. In VSCode, open the repository folder (if not already open)
-2. Go to **Terminal** → **New Terminal** (or press `` Ctrl+` ``)
+2. Go to **Terminal** → **New Terminal** (or press `` Ctrl+Shift+` ``)
    - A terminal panel will appear at the bottom of VSCode
 3. Make sure you're in the repository folder. The terminal should show the path ending in `ENGR315-fa2026-student`
 4. Create the virtual environment by typing this command and pressing Enter:

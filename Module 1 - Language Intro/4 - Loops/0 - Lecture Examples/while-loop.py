@@ -5,8 +5,8 @@ A simple while loop example of how to calculate compounding interest
 # initial bank deposit
 balance = 1000
 
-# interest rate (as a fraction) of 2.3%
-rate = 0.023
+# interest rate (as a fraction) of 1%
+rate = 0.01
 
 # years to compound interest
 years = 10

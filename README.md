@@ -24,11 +24,10 @@ ENGR315-fa2026-student/
 ├── Module 1 - Language Intro/      # Python fundamentals
 ├── Module 2 - SWE/                 # Software engineering practices
 ├── Module 3 - Time-Series Data/    # Working with temporal data
-├── Module 4 - Reporting/           # Data visualization
-├── Module 5 - Statistics/          # Statistical analysis
-├── Module 6 - Data Fitting/        # Regression and curve fitting
-├── Module 7 - Signal Processing/   # Filtering and frequency analysis
-├── Module 8 - Optimization/        # Computational optimization
+├── Module 4 - Statistics/          # Statistical analysis
+├── Module 5 - Data Fitting/        # Regression and curve fitting
+├── Module 6 - Signal Processing/   # Filtering and frequency analysis
+├── Module 7 - Optimization/        # Computational optimization
 ├── data/                           # Datasets for assignments
 └── GETTING_STARTED.md             # Setup instructions (START HERE!)
 ```

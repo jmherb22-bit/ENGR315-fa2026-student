@@ -1,9 +1,9 @@
 # make a simple function to test for even or odd
 def is_even(num):
     """
-    Test whether a value is an even
+    Test whether a value is even
     :param num: A value
-    :return: True is the value is even, otherwise False
+    :return: True if the value is even, otherwise False
     """
     if num % 2 == 0:
         return True

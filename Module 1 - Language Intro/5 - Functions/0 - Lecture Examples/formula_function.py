@@ -4,7 +4,7 @@ def compound_return(initial_investment, interest_rate, years):
     :param initial_investment: Initial principal investment
     :param interest_rate: Rate of return expressed as an integer between 0 and 100
     :param years: Number of years to hold the investment
-    :return: Total value fo the investment at the end of the term
+    :return: Total value of the investment at the end of the term
     """
     final_value = initial_investment * (1 + (interest_rate / 100)) ** years
 

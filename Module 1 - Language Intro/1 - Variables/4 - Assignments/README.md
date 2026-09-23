@@ -14,7 +14,7 @@ Note: this problem does not require the "compounding interest" formula from the 
 **Problem 1.4.2: Elon's Money**
 
 Prompt: On October 27th, 2022, Elon Musk purchased Twitter for $44B in total, with reportedly $33B of his own money [(NYT)](https://www.nytimes.com/2022/10/27/technology/elon-musk-twitter-deal-complete.html). Since
-that time, it appears this investment has not worked out. If Elon had instead bought $44B of 
+that time, it appears this investment has not worked out. If Elon had instead bought $33B of 
 [US Treasury Bonds](https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve&field_tdr_date_value=2022), 
 how much would his total investments be worth in 10 and 20 years after the bonds expire? Assume the 10-year bonds pay 3.96%,
 the 20-year bonds pay 4.32%, with each compounding annually. (Assume these are two hypothetical purchases.) 

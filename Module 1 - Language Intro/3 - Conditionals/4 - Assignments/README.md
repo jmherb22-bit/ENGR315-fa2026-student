@@ -4,7 +4,7 @@ which language has the largest standard deviation. Usage will be [np.std()](http
 
 Store the longest list in the object "longest_list_is"
 
-Note: You will need to install numpy. Refer to GGETTING_STARTED.md how to install requirements.
+Note: You will need to install numpy. Refer to GETTING_STARTED.md how to install requirements.
 
 **3.4.2 - Odds and Even Counting**
 Given a list, count the number of even and odd numbers in the list. Your final answer should

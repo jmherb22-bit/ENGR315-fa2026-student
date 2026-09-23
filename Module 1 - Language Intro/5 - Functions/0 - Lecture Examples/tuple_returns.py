@@ -29,7 +29,7 @@ def find_min_loc(array2D, x_dim, y_dim):
     return x_loc, y_loc, min_value
 
 
-# get random length from 2 to 10
+# get random length from 2 to 6
 length = random.randint(2, 6)
 
 # create square array of random length

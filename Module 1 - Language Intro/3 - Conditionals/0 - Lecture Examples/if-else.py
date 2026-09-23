@@ -60,7 +60,7 @@ elif random_num % 2 == 1:
 
 # this condition should never execute
 else:
-    print("We should neve see this statement...")
+    print("We should never see this statement...")
 
 
 
