@@ -1,3 +1,6 @@
+from datetime import datetime, timedelta
+import os
+from sqlite3 import Date
 import sys
 
 """
@@ -68,3 +71,88 @@ def parse_nyt_data(file_path=''):
     return data
 
 ### YOUR CODE HERE ###
+
+state_var = 'Virginia' #select state to phocus on 
+ 
+ 
+def daily_new_cases(data, county):#define fxn to phocus on new cases for a specific county
+    cumulative = {}
+    for (date, cty, state, fips, cases, deaths) in data:
+        if cty in (county, county + ' city') and state == state_var:#filter based on state, include cty with city in name so hburg data is not missed
+             cumulative[date] = cases
+ 
+    if not cumulative:
+        return {}
+ 
+    # take day by day difference
+    days = sorted(cumulative)
+    current = datetime.fromisoformat(days[0])
+    last = datetime.fromisoformat(days[-1])
+ 
+    daily = {}
+    previous_total = 0
+    while current <= last:
+        date_str = current.strftime('%Y-%m-%d')      # match file format 
+        total = cumulative.get(date_str, previous_total)   
+        daily[date_str] = total - previous_total
+        previous_total = total
+        current += timedelta(days=1)
+    return daily
+ 
+ 
+## Question 1: first positive case
+def first_positive_case(data, county):
+    """Return the earliest date with more than 0 cases"""
+    daily = daily_new_cases(data, county)
+    for date in sorted(daily):
+        if daily[date] > 0:
+            return date
+    return None
+ 
+ 
+## Question 2: day with the greatest number of new cases
+def peak_day(data, county):
+    """Return the date with the most new cases"""
+    daily = daily_new_cases(data, county)
+    best_date = max(daily, key=daily.get)
+    return best_date, daily[best_date]
+ 
+ 
+## Question 3: worst seven-day period
+def worst_seven_days(data, county):
+    """
+    Return (start_date, end_date, total) for the 7 consecutive days with the
+    most new cases
+    """
+    daily = daily_new_cases(data, county)
+    dates = sorted(daily)
+    max_cases = -1
+    worst_period = None
+    for i in range(len(dates) - 6):
+        seven_day_sum = sum(daily[dates[j]] for j in range(i, i + 7))
+        if seven_day_sum > max_cases:
+            max_cases = seven_day_sum
+            worst_period = (dates[i], dates[i + 6], seven_day_sum)
+    return worst_period
+ 
+ 
+def main():
+    csv_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'us-counties.csv')
+    data = parse_nyt_data(csv_path) 
+
+    for county in ['Harrisonburg', 'Rockingham']:#Call all fxns for each county and print results
+        print(f"--- {county} ---")
+        print("First positive case:", first_positive_case(data, county))
+ 
+        date, cases = peak_day(data, county)
+        print(f"Most new cases in one day: {cases} on {date}")
+ 
+        start, end, total = worst_seven_days(data, county)
+        print(f"Worst 7-day period: {start} to {end} ({total} new cases)")
+        print()
+            
+    data = parse_nyt_data(csv_path)
+ 
+if __name__ == '__main__':
+    main()
+ 
