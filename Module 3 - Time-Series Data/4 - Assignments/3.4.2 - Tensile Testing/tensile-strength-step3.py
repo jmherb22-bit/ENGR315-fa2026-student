@@ -101,7 +101,7 @@ def calculate_elastic_modulus(strain, stress):
 
     ### your code below ###
     secant_strain = -1
-
+    
     # Step 3b: find the intersection between 40% line and the curvey
     # take the abs() difference between the stress vector and secant_strain point
 

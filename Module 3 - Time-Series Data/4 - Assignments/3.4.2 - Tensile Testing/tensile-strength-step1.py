@@ -5,7 +5,7 @@ import sys
 
 
 def parse_tensile_file(path_to_file):
-    file = open(path_to_file)
+    file = open(r"C:\Users\jmher\OneDrive\Documents\GitHub\ENGR315-fa2026-student\data\tensile\1045CR\C01A1045CR_1.csv")
     # required meta-data
     gage_diameter = -1
     maximum_force = - 1
@@ -62,12 +62,13 @@ def calculate_stress(force, sample_diameter):
 
     # calculate the cross-section area (mm^2)
     ### your code here ###
-
+    cross_sectional_area = math.pi * (sample_diameter / 2) ** 2
     # calculate stress (MPa) from load (kN) and cross-sectional area
     ### your code here ###
+    stress = force / cross_sectional_area * 1000  # Convert kN to N and mm^2 to m^2
 
     # delete this line and replace it with your own
-    stress = None
+    # stress = None
 
     return stress
 
