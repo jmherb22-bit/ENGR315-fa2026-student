@@ -1,3 +1,5 @@
+#from PIL.SpiderImagePlugin import filename
+
 from writing_tensile_utils import *
 import os
 import sys
@@ -14,20 +16,19 @@ def generate_csv_file(filename, results):
     # Step 1: create a variable to hold the file name
 
     # uncomment this line
-    # output_file_name = ### your code here ###
-
+    output_file_name = filename if filename.endswith(".csv") else f"{filename}.csv"
     # Step 2: use open() to open the file in write mode. Set the return of open()
     # to a variable name that will be your file handle
 
     # uncomment the line below
-    # file = ### your code here ###
+    file = open(output_file_name, "w")
 
     # Step 3: write out the header for the CSV file. This string is provided for you so
     # your data can be loaded and checked. Use write().
     file_header = "Sample_Name,Material_Type,Tensile_Strength,Fracture_Strain,Elastic_Modulus,Yield_Strength\n"
 
     # write header string out to file
-    # file.### your code here ###
+    file.write(file_header)
 
     # Step 4: Iterate through the list of results. Each sample will contain the data for an individual test
     # The Materials Object will contain sample name, type, tensile strength, fracture strain, elastic modulus,
@@ -53,10 +54,11 @@ def generate_csv_file(filename, results):
         # Finally, given that long string, write it to a file
 
         ### your code here ###
-
+        string_to_write = f"{name},{material_type},{tensile_strength},{fracture_strain},{modulus},{yield_strength}\n"
+        file.write(string_to_write)
     # close the file once all writing is complete
     # uncomment this line before you're done
-    ##file.close()
+    file.close()
 
     # since we got here, it must have worked.
     return True

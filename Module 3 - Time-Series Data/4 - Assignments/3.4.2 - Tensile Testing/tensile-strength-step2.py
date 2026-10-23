@@ -5,7 +5,7 @@ import sys
 
 
 def parse_tensile_file(path_to_file):
-    file = open(path_to_file)
+    file = open(r"C:\Users\jmher\OneDrive\Documents\GitHub\ENGR315-fa2026-student\data\tensile\1045CR\C06A1045CR_1.csv")
     # required meta-data
     gage_diameter = -1
     maximum_force = - 1
@@ -83,9 +83,14 @@ def calculate_max_strength_strain(strain, stress):
 
     # calculate the maximum stress experienced
     ultimate_tensile_stress = -1
-
+    for s in stress:
+        if s > ultimate_tensile_stress:
+            ultimate_tensile_stress = s
     # calculate the maximum strain experienced
     fracture_strain = -1
+    for e in strain:
+        if e > fracture_strain:
+            fracture_strain = e
 
     return ultimate_tensile_stress, fracture_strain
 

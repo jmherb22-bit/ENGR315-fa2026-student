@@ -5,7 +5,7 @@ import sys
 
 
 def parse_tensile_file(path_to_file):
-    file = open(path_to_file)
+    file = open(r"C:\Users\jmher\OneDrive\Documents\GitHub\ENGR315-fa2026-student\data\tensile\1045CR\C06A1045CR_1.csv")
     # required meta-data
     gage_diameter = -1
     maximum_force = - 1
@@ -61,23 +61,38 @@ def calculate_stress(force, sample_diameter):
     """
 
     ### YOUR SOLUTION FROM STEP 1 TEMPLATE HERE ###
-
-    return None
-
-
+     # calculate the cross-section area (mm^2)
+    ### your code here ###
+    cross_sectional_area = math.pi * (sample_diameter / 2) ** 2
+    # calculate stress (MPa) from load (kN) and cross-sectional area
+    ### your code here ###
+    stress = force / cross_sectional_area * 1000  # Convert kN to N and mm^2 to m^2
+        
+    return stress
+    
+    
 def calculate_max_strength_strain(strain, stress):
-    """
-    Calculate the Ultimate Tensile Stress and Fracture Strain
-    :param strain: An array of Strain data (mm/mm, dimensionless)
-    :param stress: An array of Stress data
-    :return:
-    Ultimate Tensile Stress: the maximum stress experienced
-    Fracture Strain: the maximum strain experienced before fracture
-    """
-
-    ### YOUR SOLUTION FROM STEP 2 TEMPLATE HERE ###
-
-    return -1, -1
+        """
+        Calculate the Ultimate Tensile Stress and Fracture Strain
+        :param strain: An array of Strain data (mm/mm, dimensionless)
+        :param stress: An array of Stress data
+        :return:
+        Ultimate Tensile Stress: the maximum stress experienced
+        Fracture Strain: the maximum strain experienced before fracture
+        """
+    
+        # calculate the maximum stress experienced
+        ultimate_tensile_stress = -1
+        for s in stress:
+            if s > ultimate_tensile_stress:
+                ultimate_tensile_stress = s
+        # calculate the maximum strain experienced
+        fracture_strain = -1
+        for e in strain:
+            if e > fracture_strain:
+                fracture_strain = e
+    
+        return ultimate_tensile_stress, fracture_strain
 
 def calculate_elastic_modulus(strain, stress):
     """
@@ -96,9 +111,39 @@ def calculate_elastic_modulus(strain, stress):
     slope = None
     intercept = None
 
-    ### YOUR SOLUTION FROM STEP 3 TEMPLATE HERE ###
+    # Step 3a: find the point that is 40% of peak stress
+    # use from 0 to that value to create a linear plot
+
+    ### your code below ###
+    secant_strain = -1
+    secant_strain = 0.4 * max(stress)
+    # Step 3b: find the intersection between 40% line and the curvey
+    # take the abs() difference between the stress vector and secant_strain point
+
+    ### your code below ###
+    diffs = -1
+    diffs = np.abs(stress - secant_strain)
+    # use np.argmin() to find the minimum of the diffs array.
+    # this will be the INDEX of the point in stress-strain that is closest to
+    # secant_strain intersection
+
+    # uncomment the line below and replace with your own
+    linear_index = np.argmin(diffs)
+
+    # Step 3c: down select to linear region for stress and strain
+    # using list slicing. Uncomment lines below
+    linear_stress = stress[:linear_index]
+    linear_strain = strain[:linear_index]
+
+    # Step 3d: find least squares fit to a line in the linear region
+    # use 1-degree polynominal fit (line) from np.polyfit
+    # save the slope and intercept so we can plot the line later
+    np.polyfit(linear_strain, linear_stress, 1)
+    # uncomment the line below and call np.polyfit
+    slope, intercept = np.polyfit(linear_strain, linear_stress, 1)
 
     return linear_index, slope, intercept
+
 
 def calculate_percent_offset(slope, strain, stress):
     """
@@ -115,14 +160,14 @@ def calculate_percent_offset(slope, strain, stress):
     offset = 0.002
 
     # calculate the offset line: y=m(x-0.002) + 0
-    offset_line = None
+    offset_line = slope * (strain - offset)
 
     # measure distance from all points on graph to this line. Consider using the
     # abs() method to ensure values are positive
-    distance = None
+    distance = np.abs(stress - offset_line)
 
     # use argmin to find the index where the distance is minimal
-    intercept_index = -1
+    intercept_index = np.argmin(distance)
 
     return offset_line, intercept_index
 
