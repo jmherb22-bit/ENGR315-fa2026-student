@@ -47,7 +47,13 @@ def one_sided_tests(_files: list, _mean: float, _alpha: float, _less_than: bool)
     reject_null_hypothesis = []
 
     # YOUR CODE HERE #
+    side = 'less' if _less_than else 'greater'
 
+    for file in _files:
+        data = np.loadtxt(file)
+        result = ttest_1samp(data, _mean, alternative=side)
+        if result.pvalue < _alpha:
+            reject_null_hypothesis.append(file)
     # return files that were rejected
     return reject_null_hypothesis
 

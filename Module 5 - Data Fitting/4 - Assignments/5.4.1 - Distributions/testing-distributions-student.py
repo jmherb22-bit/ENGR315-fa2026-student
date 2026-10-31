@@ -34,7 +34,7 @@ def fit_normal(_samples):
     fitted_std = None
 
     # YOUR CODE HERE #
-
+    
     return fitted_mean, fitted_std
 
 
