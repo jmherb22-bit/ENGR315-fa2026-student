@@ -1,5 +1,9 @@
+import os
+
 import numpy as np
 from ekg_testbench import EKGTestBench
+from scipy.signal import butter, filtfilt, find_peaks
+from scipy.ndimage import median_filter, percentile_filter
 
 def detect_heartbeats(filepath):
     """
@@ -13,39 +17,56 @@ def detect_heartbeats(filepath):
 
     # import the CSV file using numpy
     path = filepath
-
+    fs = 360
     # load data in matrix from CSV file; skip first two rows
     ## your code here
+    data = np.loadtxt(path, delimiter=',', skiprows=2)
 
     # save each vector as own variable
     ## your code here
+    times = data[:, 0]
+    channel_1 = data[:, 1]
+    channel_2 = data[:, 2] if data.shape[1] > 2 else None
 
     # identify one column to process. Call that column signal
 
-    signal = -1 ## your code here
+    signal = channel_1 ## your code here
 
     # pass data through LOW PASS FILTER (OPTIONAL)
     ## your code here
-
+    nyq = fs / 2
+    
     # pass data through HIGH PASS FILTER (OPTIONAL) to create BAND PASS result
     ## your code here
+    b, a = butter(2, [5 / nyq, 15 / nyq], btype='band')
+    signal = filtfilt(b, a, signal)
 
     # pass data through differentiator
     ## your code here
+    signal = np.diff(signal, prepend=signal[0])
 
     # pass data through square function
     ## your code here
+    signal = signal ** 2
 
     # pass through moving average window
     ## your code here
-
+    window = int(0.15 * fs)
+    signal = np.convolve(signal, np.ones(window) / window, mode='same')
+    
     # use find_peaks to identify peaks within averaged/filtered data
     # save the peaks result and return as part of testbench result
 
     ## your code here peaks,_ = find_peaks(....)
+    candidates, _ = find_peaks(signal, distance=int(0.25 * fs))
 
-    beats = None
+    heights = signal[candidates]
+    local_ref = percentile_filter(heights, percentile=80, size=31, mode='nearest')
 
+    keep = heights >= 0.35 * local_ref
+    peaks = candidates[keep]
+    beats = peaks
+    
     # do not modify this line
     return signal, beats
 
@@ -71,8 +92,7 @@ if __name__ == "__main__":
     ### DO NOT MODIFY BELOW THIS LINE!!! ###
 
     # path to ekg folder
-    path_to_folder = "../../../data/ekg/"
-
+    path_to_folder = "C:/Users/jmher/OneDrive/Documents/GitHub/ENGR315-fa2026-student/data/ekg/"
     # select a signal file to run
     signal_filepath = path_to_folder + database_name + ".csv"
 
