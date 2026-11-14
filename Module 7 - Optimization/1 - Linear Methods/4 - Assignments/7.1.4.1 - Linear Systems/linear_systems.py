@@ -25,6 +25,13 @@ def direct_solve(_A, _b):
     currents = None
 
     # YOUR CODE HERE #
+    A = np.asarray(_A, dtype=float)
+    b = np.asarray(_b, dtype=float)
+    currents = np.linalg.solve(A, b) 
+
+
+    
+    
 
     return currents
 
@@ -40,6 +47,11 @@ def verify_solution(_A, _b, _x):
     matches = None
 
     # YOUR CODE HERE #
+    A = np.asarray(_A, dtype=float)
+    b = np.asarray(_b, dtype=float)
+    x = np.asarray(_x, dtype=float)
+    calculated_b = np.dot(A, x)
+    matches = bool(np.allclose(calculated_b, b))
 
     return calculated_b, matches
 
@@ -62,6 +74,24 @@ def jacobi_solve(_A, _b, _tolerance=0.001, _max_iterations=100):
     converged = None
 
     # YOUR CODE HERE #
+    A = np.asarray(_A, dtype=float)
+    b = np.asarray(_b, dtype=float)
+
+    D = np.diag(A)              
+    R = A - np.diag(D)          
+
+    x = np.zeros(len(b))
+    iterations = 0
+    converged = False
+
+    for _ in range(_max_iterations):
+        x_new = (b - np.dot(R, x)) / D   
+        iterations += 1
+        if np.max(np.abs(x_new - x)) < _tolerance:
+            converged = True
+            x = x_new
+            break
+        x = x_new
 
     return x, iterations, converged
 
@@ -77,7 +107,15 @@ def scipy_iterative_solve(_A, _b, _rtol=1e-5):
     info = None
 
     # YOUR CODE HERE #
-
+    A = np.asarray(_A, dtype=float)
+    b = np.asarray(_b, dtype=float)
+    try:
+        x, info = cg(A, b, rtol=_rtol)
+    except TypeError:
+        # Older SciPy versions call this argument "tol"
+        x, info = cg(A, b, tol=_rtol)
+    info = int(info)
+    
     return x, info
 
 
